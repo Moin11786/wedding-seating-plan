@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Seating Plan</title>
+<meta name="description" content="Find your wedding table by searching your name.">
+<style>
+:root{--bg:#f8f6f2;--card:#fff;--text:#2f302d;--muted:#777872;--accent:#8b7562;--accent-dark:#705d4e;--border:#e4dfd7;--success:#f3eee8}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:Georgia,"Times New Roman",serif}.page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 18px}.container{width:100%;max-width:560px;text-align:center}.eyebrow{margin:0 0 10px;color:var(--accent);font:700 12px Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase}h1{margin:0;font-size:clamp(38px,9vw,58px);font-weight:400;line-height:1.05}.intro{margin:16px auto 0;max-width:420px;color:var(--muted);font:16px/1.6 Arial,sans-serif}.search-card{margin-top:32px;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:0 10px 35px rgba(60,50,40,.06)}label{display:block;margin-bottom:10px;text-align:left;font:700 14px Arial,sans-serif}.search-row{display:flex;gap:10px}input{min-width:0;flex:1;min-height:50px;padding:0 15px;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--text);font:16px Arial,sans-serif;outline:none}input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(139,117,98,.15)}button{min-height:50px;padding:0 18px;border:0;border-radius:10px;background:var(--accent);color:#fff;cursor:pointer;font:700 15px Arial,sans-serif}button:hover{background:var(--accent-dark)}.message{min-height:24px;margin:14px 0 0;color:#a14e4e;font:14px Arial,sans-serif}.result{display:none;margin-top:20px;padding:28px 20px;background:var(--success);border:1px solid var(--border);border-radius:16px}.result.visible{display:block}.welcome{margin:0;color:var(--muted);font:14px Arial,sans-serif}.guest-name{margin:6px 0 20px;font-size:25px;font-weight:400}.table-label{margin:0;color:var(--muted);font:14px Arial,sans-serif}.table-number{margin:5px 0 0;font-size:48px;line-height:1.1;font-weight:400}.footer{margin-top:28px;color:var(--muted);font:13px Arial,sans-serif}@media(max-width:520px){.page{padding:24px 14px}.search-card{padding:18px}.search-row{flex-direction:column}button{width:100%}}
+</style>
+</head>
+<body>
+<main class="page"><section class="container" aria-labelledby="page-title">
+<p class="eyebrow">Welcome to the Wedding of Moinuddin & Zaynah</p><h1 id="page-title">Find Your Seat</h1>
+<p class="intro">Welcome! Enter your name below and we'll show you which table you've been seated at.</p>
+<div class="search-card"><form id="seating-form"><label for="guest-name">Your name</label><div class="search-row"><input id="guest-name" name="guest-name" type="search" placeholder="e.g. Emma Smith" autocomplete="off" required><button type="submit">Find my table</button></div></form>
+<p id="message" class="message" aria-live="polite"></p><div id="result" class="result" aria-live="polite"><p class="welcome">Welcome to the wedding!</p><p id="guest-result" class="guest-name"></p><p class="table-label">Your table is</p><p id="table-result" class="table-number"></p></div></div>
+<p class="footer">We hope you have a wonderful celebration.</p>
+</section></main>
+<script>
+// Replace the example guests below with your real guest list.
+const guests=[
+{name:"Emma Smith",table:"Table 1"},{name:"David Smith",table:"Table 1"},
+{name:"Olivia Jones",table:"Table 2"},{name:"Michael Jones",table:"Table 2"},
+{name:"Sophie Williams",table:"Table 3"},{name:"James Williams",table:"Table 3"},
+{name:"Charlotte Brown",table:"Table 4"},{name:"Thomas Brown",table:"Table 4"}
+];
+const form=document.getElementById("seating-form"),input=document.getElementById("guest-name"),message=document.getElementById("message"),result=document.getElementById("result"),guestResult=document.getElementById("guest-result"),tableResult=document.getElementById("table-result");
+function normaliseName(name){return name.trim().toLowerCase().replace(/\s+/g," ")}
+form.addEventListener("submit",function(e){e.preventDefault();const search=normaliseName(input.value);message.textContent="";result.classList.remove("visible");if(!search){message.textContent="Please enter your name.";return}const guest=guests.find(p=>normaliseName(p.name)===search);if(guest){guestResult.textContent=guest.name;tableResult.textContent=guest.table;result.classList.add("visible")}else{message.textContent="We couldn't find that name. Please check the spelling and try again."}});
+</script>
+</body></html>
